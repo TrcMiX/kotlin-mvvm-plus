@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UtilsPack</string>
+
+    <string name="relogin">请重新登陆</string>
+    <string name="req_error">请求失败，请稍后再试</string>
+    <string name="json_parse">解析错误，请稍后再试</string>
+    <string name="internet_error">网络连接错误，请稍后重试</string>
+    <string name="ssl_error">证书出错，请稍后再试</string>
+    <string name="internet_time_out">网络连接超时，请稍后重试</string>
+    <string name="reqing">请求网络中...</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hlyx</string>
+    <string name="done">确定</string>
+    <string name="cancel">取消</string>
+    <string name="warm_prompt">温馨提示</string>
+    <string name="request_network">请求网络中</string>
+    <string name="loading">请稍等</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="no_data">暂时没有数据</string>
+    <string name="check_network">请检查网络后点击重新加载</string>
+    <string name="retry">点击我重试</string>
+    <string name="hours">小时</string>
+    <string name="minutes">分钟</string>
+    <string name="seconds">秒</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GoBeyond</string>
+    <string name="relogin">Please log in again.</string>
+    <string name="req_error">The request failed. Please try again later</string>
+    <string name="json_parse">Parsing error, please try again later</string>
+    <string name="internet_error">Network connection error, please try again later</string>
+    <string name="ssl_error">Certificate error, please try again later</string>
+    <string name="internet_time_out">The network connection timed out. Please try again later</string>
+    <string name="reqing">Request network…</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#649DFF</color>
+    <color name="colorPrimaryDark">#5880EA</color>
+    <color name="colorAccent">#6C95FF</color>
+    <color name="textHint">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorGray">#333</color>
+    <color name="colorBlack666">#666</color>
+    <color name="colorBlack333">#333</color>
+    <color name="windowBackground">#F5F5F5</color>
+    <color name="background">#f6f6f6</color>
+    <color name="backgroundeee">#eeeeee</color>
+    <color name="backgrounGrey">#CCCCCC</color>
+    <color name="texttipColor">#a0a0a0</color>
+    <color name="diverColoe">#cecece</color>
+    <color name="accent">#E91E63</color>
+    <color name="chinaHoliDay">#e10015</color>
+
+    <color name="main_blue">#056EF7</color>
+    <color name="main_black">#333333</color>
+
+    <color name="main_black_gray">#494949</color>
+    <color name="main_deep_gray">#292929</color>
+    <color name="main_gray">#D3D3D3</color>
+    <color name="main_text_gray">#909399</color>
+
+    <color name="main_border">#DCDFE6</color>
+    <color name="main_backgroud">#f9f9f9</color>
+
+    <color name="main_red">#F93E35</color>
+    <color name="main_text_red">#E02020</color>
+    <color name="main_yellow">#FFB900</color>
+
+</resources>
