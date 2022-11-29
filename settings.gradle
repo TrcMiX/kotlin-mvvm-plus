@@ -1,2 +1,2 @@
 include ':app', ':UtilsPack'
-rootProject.name = "hlyx"
+rootProject.name = "mvvm"

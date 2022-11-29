@@ -14,9 +14,9 @@
 
 -optimizations !code/simplification/artithmetic,!field/*,!class/merging/*
 
--keep class com.org.hlyx.data.model.**{ *; }
--keep class com.org.hlyx.support.weight.**{ *; }
--keep class com.org.utilspack.**{ *; }
+-keep class com.mvvm.plus.data.model.**{ *; }
+-keep class com.mvvm.plus.support.weight.**{ *; }
+-keep class com.mvvm.utilspack.**{ *; }
 
 ################common###############
 

@@ -14,7 +14,7 @@
 
 -optimizations !code/simplification/artithmetic,!field/*,!class/merging/*
 
--keep class com.org.utilspack.**{*;}
+-keep class com.mvvm.utilspack.**{*;}
 
 ################common###############
 

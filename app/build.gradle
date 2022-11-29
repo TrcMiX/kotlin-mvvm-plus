@@ -11,17 +11,17 @@ android {
 //            properties.load(inputStream)
 //            def keyDir = properties.getProperty('key.file')
 //
-//            keyAlias 'hlyx'
-//            keyPassword '111111'
+//            keyAlias ''
+//            keyPassword ''
 //            storeFile file(keyDir)
-//            storePassword '111111'
+//            storePassword ''
 //        }
     }
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.org.hlyx"
+        applicationId 'com.mvvm.plus'
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 2

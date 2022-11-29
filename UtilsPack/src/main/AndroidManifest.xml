@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.org.utilspack" >
+    package="com.mvvm.utilspack">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
         <provider
             android:authorities="${applicationId}.KtxInstaller"
-            android:name="com.org.utilspack.base.Ktx"
-            android:exported="false"/>
+            android:name="com.mvvm.utilspack.base.Ktx"
+            android:exported="false" />
     </application>
 </manifest>

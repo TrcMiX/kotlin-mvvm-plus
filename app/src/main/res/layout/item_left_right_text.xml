@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.org.hlyx.data.model.ResponseBody.ResLeftRight" />
+            type="com.mvvm.plus.data.model.ResponseBody.ResLeftRight" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
