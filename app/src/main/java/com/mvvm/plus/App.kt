@@ -10,6 +10,7 @@ import com.mvvm.plus.support.event.loadCallBack.EmptyCallback
 import com.mvvm.plus.support.event.loadCallBack.ErrorCallback
 import com.mvvm.plus.support.event.loadCallBack.LoadingCallback
 import com.mvvm.plus.support.util.SettingUtil
+import com.mvvm.plus.support.util.SettingUtil.needSwitchLanguage
 import com.mvvm.utilspack.base.BaseApp
 import com.mvvm.utilspack.ext.util.jetPackLog
 import com.tencent.mmkv.MMKV
@@ -41,7 +42,9 @@ class App : BaseApp() {
         jetPackLog = BuildConfig.DEBUG
 
         val string = SPUtils.getInstance().getString("KEY_LOCALE")
-        LanguageUtils.applyLanguage(SettingUtil.getLanguageLocale(string))
+        if (needSwitchLanguage(this, string)) {
+            LanguageUtils.applyLanguage(SettingUtil.getLanguageLocale(string))
+        }
 
         //防止项目崩溃，崩溃后打开错误界面
         if (!BuildConfig.DEBUG)

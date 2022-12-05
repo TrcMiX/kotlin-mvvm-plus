@@ -226,11 +226,17 @@ object SettingUtil {
         return Locale.SIMPLIFIED_CHINESE
     }
 
-    fun switchLanguage(context: Context,lc:Locale){
+    fun switchLanguage(context: Context, lc: Locale) {
         val resources: Resources = context.getResources()
         val config: Configuration = resources.getConfiguration()
         val dm: DisplayMetrics = resources.getDisplayMetrics()
         config.setLocale(lc)
         resources.updateConfiguration(config, dm)
+    }
+
+    fun needSwitchLanguage(context: Context, lc: String): Boolean {
+        val resources: Resources = context.getResources()
+        val config: Configuration = resources.getConfiguration()
+        return lc.isNotBlank() && lc != config.locale.country
     }
 }
