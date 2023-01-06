@@ -7,7 +7,18 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 
 object KtxLifecycleExt {
-    fun (() -> Unit).repeatOnResumed(lifecycleOwner: LifecycleOwner) {
+    /**
+     * suspend {
+     *     try {
+     *         stateFlow.collect { value: String ->
+     *             println("Received $value")
+     *         }
+     *     } catch (e: Exception) {
+     *         e.printStackTrace()
+     *     }
+     * }.repeatOnResumed(this)
+     */
+    fun (suspend () -> Unit).repeatOnResumed(lifecycleOwner: LifecycleOwner) {
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 this@repeatOnResumed.invoke()
@@ -15,7 +26,18 @@ object KtxLifecycleExt {
         }
     }
 
-    fun LifecycleOwner.repeatOnResumed(function: () -> Unit) {
+    /**
+     * repeatOnResumed {
+     *     try {
+     *         stateFlow.collect { value: String ->
+     *             println("Received $value")
+     *         }
+     *     } catch (e: Exception) {
+     *         e.printStackTrace()
+     *     }
+     * }
+     */
+    fun LifecycleOwner.repeatOnResumed(function: suspend () -> Unit) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 function.invoke()
