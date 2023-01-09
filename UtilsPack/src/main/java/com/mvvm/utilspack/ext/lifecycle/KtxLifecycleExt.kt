@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 object KtxLifecycleExt {
@@ -18,10 +19,10 @@ object KtxLifecycleExt {
      *     }
      * }.repeatOnResumed(this)
      */
-    fun (suspend () -> Unit).repeatOnResumed(lifecycleOwner: LifecycleOwner) {
+    fun (suspend (CoroutineScope) -> Unit).repeatOnResumed(lifecycleOwner: LifecycleOwner) {
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                this@repeatOnResumed.invoke()
+                this@repeatOnResumed.invoke(this)
             }
         }
     }
@@ -37,10 +38,10 @@ object KtxLifecycleExt {
      *     }
      * }
      */
-    fun LifecycleOwner.repeatOnResumed(function: suspend () -> Unit) {
+    fun LifecycleOwner.repeatOnResumed(function: suspend (CoroutineScope) -> Unit) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                function.invoke()
+                function.invoke(this)
             }
         }
     }
