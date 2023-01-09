@@ -45,4 +45,12 @@ object KtxLifecycleExt {
             }
         }
     }
+
+    fun LifecycleOwner.repeatOnCreate(function: suspend (CoroutineScope) -> Unit) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                function.invoke(this)
+            }
+        }
+    }
 }
