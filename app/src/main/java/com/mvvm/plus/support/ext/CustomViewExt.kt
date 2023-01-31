@@ -6,23 +6,33 @@ import android.content.res.Resources
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.mvvm.plus.App
 import com.mvvm.plus.R
 import com.mvvm.plus.support.event.loadCallBack.EmptyCallback
 import com.mvvm.plus.support.event.loadCallBack.ErrorCallback
 import com.mvvm.plus.support.network.stateCallback.ListDataUiState
+import com.mvvm.plus.support.util.SettingUtil
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
@@ -126,6 +136,93 @@ fun RecyclerView.init(
     overScrollMode = View.OVER_SCROLL_NEVER
     isNestedScrollingEnabled = isScroll
     return this
+}
+
+/**
+ * 根据控件的类型设置主题，注意，控件具有优先级， 基本类型的控件建议放到最后，像 Textview，FragmentLayout，不然会出现问题，
+ * 列如下面的BottomNavigationViewEx他的顶级父控件为FragmentLayout，如果先 is Fragmentlayout判断在 is BottomNavigationViewEx上面
+ * 那么就会直接去执行 is FragmentLayout的代码块 跳过 is BottomNavigationViewEx的代码块了
+ */
+fun setUiTheme(color: Int, vararg anyList: Any?) {
+    anyList.forEach { view ->
+        view?.let {
+            when (it) {
+                is LoadService<*> -> SettingUtil.setLoadingColor(color, it as LoadService<Any>)
+                is FloatingActionButton -> it.backgroundTintList =
+                    SettingUtil.getOneColorStateList(color)
+                is SwipeRefreshLayout -> it.setColorSchemeColors(color)
+                is BottomNavigationViewEx -> {
+                    it.itemIconTintList = SettingUtil.getColorStateList(color)
+                    it.itemTextColor = SettingUtil.getColorStateList(color)
+                }
+                is TextView -> it.setTextColor(color)
+                is LinearLayout -> it.setBackgroundColor(color)
+                is ConstraintLayout -> it.setBackgroundColor(color)
+                is FrameLayout -> it.setBackgroundColor(color)
+            }
+        }
+    }
+}
+
+//设置适配器的列表动画
+fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
+    //等于0，关闭列表动画 否则开启
+    if (mode == 0) {
+        this.animationEnable = false
+    } else {
+        this.animationEnable = true
+        this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode - 1])
+    }
+}
+
+fun ViewPager2.init(
+    fragment: Fragment,
+    fragments: ArrayList<Fragment>,
+    isUserInputEnabled: Boolean = true
+): ViewPager2 {
+    //是否可滑动
+    this.isUserInputEnabled = isUserInputEnabled
+    //设置适配器
+    adapter = object : FragmentStateAdapter(fragment) {
+        override fun createFragment(position: Int) = fragments[position]
+        override fun getItemCount() = fragments.size
+    }
+    return this
+}
+
+fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
+    //是否可滑动
+    this.isUserInputEnabled = false
+    this.offscreenPageLimit = 5
+    //设置适配器
+//    adapter = object : FragmentStateAdapter(fragment) {
+//        override fun createFragment(position: Int): Fragment {
+//            when (position) {
+//                0 -> {
+//                    return HomeFragment()
+//                }
+//                else -> {
+//                    return HomeFragment()
+//                }
+//            }
+//        }
+//        override fun getItemCount() = 5
+//    }
+    return this
+}
+
+/**
+ * 拦截BottomNavigation长按事件 防止长按时出现Toast
+ * @receiver BottomNavigationViewEx
+ * @param ids IntArray
+ */
+fun BottomNavigationViewEx.interceptLongClick(vararg ids: Int) {
+    val bottomNavigationMenuView: ViewGroup = (this.getChildAt(0) as ViewGroup)
+    for (index in ids.indices) {
+        bottomNavigationMenuView.getChildAt(index).findViewById<View>(ids[index]).setOnLongClickListener {
+            true
+        }
+    }
 }
 
 fun String.tl() {
