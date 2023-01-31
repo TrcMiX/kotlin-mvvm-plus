@@ -1,5 +1,6 @@
 package com.mvvm.utilspack.base.activity
 
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.mvvm.utilspack.base.viewmodel.BaseViewModel
@@ -15,6 +16,11 @@ abstract class BaseVmDbActivity<VM : BaseViewModel, DB : ViewDataBinding> : Base
     override fun layoutId() = 0
 
     lateinit var mDatabind: DB
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        userDataBinding(true)
+        super.onCreate(savedInstanceState)
+    }
 
     /**
      * 创建DataBinding
