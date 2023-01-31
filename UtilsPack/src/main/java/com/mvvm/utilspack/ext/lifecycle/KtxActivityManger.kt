@@ -8,7 +8,10 @@ import java.util.*
  * 描述　:
  */
 object KtxActivityManger {
+    //activity集合
     private val mActivityList = LinkedList<Activity>()
+
+    //当前activity
     val currentActivity: Activity?
         get() =
             if (mActivityList.isEmpty()) null
@@ -54,16 +57,22 @@ object KtxActivityManger {
      * 关闭传入的activity类名
      */
     fun finishActivity(clazz: Class<*>) {
-        for (activity in mActivityList)
-            if (activity.javaClass == clazz)
+        for (activity in mActivityList) {
+            if (activity.javaClass == clazz) {
+                mActivityList.remove(activity)
                 activity.finish()
+                return
+            }
+        }
     }
 
     /**
      * 关闭所有的activity
      */
     fun finishAllActivity() {
-        for (activity in mActivityList)
+        for (activity in mActivityList) {
             activity.finish()
+        }
+        mActivityList.clear()
     }
 }

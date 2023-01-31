@@ -8,12 +8,16 @@ import com.mvvm.utilspack.util.CharacterHandler.Companion.xmlFormat
 import com.mvvm.utilspack.util.LogUtils
 import okhttp3.MediaType
 import okhttp3.Request
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 /**
  * 作者　: TrcMiX
  * 描述　:
  */
-class DefaultFormatPrinter : FormatPrinter{
+class DefaultFormatPrinter : FormatPrinter {
+    private var appendTag = ""
+
     /**
      * 打印网络请求信息, 当网络请求时 {[okhttp3.RequestBody]} 可以解析的情况
      *
@@ -24,6 +28,7 @@ class DefaultFormatPrinter : FormatPrinter{
         request: Request,
         bodyString: String
     ) {
+        appendTag = md5(URL_TAG + request.url())
         val requestBody =
             LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString
         val tag = getTag(true)
@@ -52,6 +57,7 @@ class DefaultFormatPrinter : FormatPrinter{
      * @param request
      */
     override fun printFileRequest(request: Request) {
+        appendTag = md5(URL_TAG + request.url())
         val tag = getTag(true)
         LogUtils.debugInfo(tag, REQUEST_UP_LINE)
         logLines(
@@ -96,6 +102,7 @@ class DefaultFormatPrinter : FormatPrinter{
         message: String,
         responseUrl: String
     ) {
+        appendTag = md5(URL_TAG + responseUrl)
         var bodyString = bodyString
         bodyString =
             when {
@@ -154,6 +161,7 @@ class DefaultFormatPrinter : FormatPrinter{
         message: String,
         responseUrl: String
     ) {
+        appendTag = md5(URL_TAG + responseUrl)
         val tag = getTag(false)
         val urlLine = arrayOf<String?>(
             URL_TAG + responseUrl,
@@ -181,6 +189,14 @@ class DefaultFormatPrinter : FormatPrinter{
         LogUtils.debugInfo(tag, END_LINE)
     }
 
+    private fun getTag(isRequest: Boolean): String {
+        return if (isRequest) {
+            "$TAG-Request-$appendTag"
+        } else {
+            "$TAG-Response-$appendTag"
+        }
+    }
+
     companion object {
         private const val TAG = "HttpLog"
         private val LINE_SEPARATOR = System.getProperty("line.separator")
@@ -203,8 +219,7 @@ class DefaultFormatPrinter : FormatPrinter{
         private const val RESPONSE_UP_LINE =
             "   ┌────── Response ───────────────────────────────────────────────────────────────────────"
         private const val BODY_TAG = "Body:"
-//        private const val URL_TAG = "URL: "
-        private const val URL_TAG = ""
+        private const val URL_TAG = "URL: "
         private const val METHOD_TAG = "Method: @"
         private const val HEADERS_TAG = "Headers:"
         private const val STATUS_CODE_TAG = "Status Code: "
@@ -241,7 +256,7 @@ class DefaultFormatPrinter : FormatPrinter{
         ) {
             for (line in lines) {
                 val lineLength = line!!.length
-                val maxLongSize = if (withLineSize) 990 else lineLength
+                val maxLongSize = if (withLineSize) 110 else lineLength
                 for (i in 0..lineLength / maxLongSize) {
                     val start = i * maxLongSize
                     var end = (i + 1) * maxLongSize
@@ -303,7 +318,7 @@ class DefaultFormatPrinter : FormatPrinter{
             log =
                 ((if (!TextUtils.isEmpty(segmentString)) "$segmentString - " else "") + "is success : "
                         + isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + DOUBLE_SEPARATOR + STATUS_CODE_TAG +
-                        code + " | " + message + DOUBLE_SEPARATOR + if (isEmpty(
+                        code + " / " + message + DOUBLE_SEPARATOR + if (isEmpty(
                         header
                     )
                 ) "" else HEADERS_TAG + LINE_SEPARATOR +
@@ -349,12 +364,30 @@ class DefaultFormatPrinter : FormatPrinter{
             return builder.toString()
         }
 
-        private fun getTag(isRequest: Boolean): String {
-            return if (isRequest) {
-                "$TAG-Request"
-            } else {
-                "$TAG-Response"
+        /**
+         * md5加密
+         */
+        private fun md5(string: String): String {
+            if (TextUtils.isEmpty(string)) {
+                return ""
             }
+            val md5: MessageDigest
+            try {
+                md5 = MessageDigest.getInstance("MD5")
+                val bytes = md5.digest(string.toByteArray())
+                val result = java.lang.StringBuilder()
+                for (b in bytes) {
+                    var temp = Integer.toHexString(b.toInt() and 0xff)
+                    if (temp.length == 1) {
+                        temp = "0$temp"
+                    }
+                    result.append(temp)
+                }
+                return result.toString()
+            } catch (e: NoSuchAlgorithmException) {
+                e.printStackTrace()
+            }
+            return ""
         }
     }
 }

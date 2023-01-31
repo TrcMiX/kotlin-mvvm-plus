@@ -1,6 +1,7 @@
 package com.mvvm.utilspack.base.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -69,7 +70,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     abstract fun createObserver()
 
     /**
-     * 注册 UI 事件
+     * 注册UI 事件
      */
     private fun registerUiChange() {
         //显示弹窗
@@ -86,6 +87,23 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         })
     }
 
+    /**
+     * 将非该Activity绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
+        viewModels.forEach { viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observe(this, Observer {
+                showLoading(it)
+            })
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observe(this, Observer {
+                dismissLoading()
+            })
+        }
+    }
+
     fun userDataBinding(isUserDb: Boolean) {
         this.isUserDb = isUserDb
     }
@@ -93,5 +111,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     /**
      * 供子类BaseVmDbActivity 初始化Databinding操作
      */
-    open fun initDataBind() {}
+    open fun initDataBind(): View? {
+        return null
+    }
 }

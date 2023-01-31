@@ -1,9 +1,9 @@
 package com.mvvm.plus.support.event
 
+import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.mvvm.plus.support.util.SettingUtil
 import com.mvvm.utilspack.base.appContext
 import com.mvvm.utilspack.base.viewmodel.BaseViewModel
-import com.mvvm.utilspack.callback.livedata.UnPeekLiveData
 
 /**
  * 作者　: TrcMiX

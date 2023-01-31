@@ -1,6 +1,6 @@
 package com.mvvm.utilspack.network.manager
 
-import com.mvvm.utilspack.callback.livedata.UnPeekLiveData
+import com.mvvm.utilspack.callback.livedata.event.EventLiveData
 
 /**
  * 作者　: TrcMiX
@@ -8,7 +8,7 @@ import com.mvvm.utilspack.callback.livedata.UnPeekLiveData
  */
 class NetworkStateManager private constructor() {
 
-    val mNetworkStateCallback = UnPeekLiveData<NetState>()
+    val mNetworkStateCallback = EventLiveData<NetState>()
 
     companion object {
         val instance: NetworkStateManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {

@@ -1,9 +1,9 @@
 package com.mvvm.utilspack.base.activity
 
-import android.os.Bundle
-import androidx.databinding.DataBindingUtil
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.mvvm.utilspack.base.viewmodel.BaseViewModel
+import com.mvvm.utilspack.ext.inflateBindingWithGeneric
 
 /**
  * 作者　: TrcMiX
@@ -12,18 +12,15 @@ import com.mvvm.utilspack.base.viewmodel.BaseViewModel
  */
 abstract class BaseVmDbActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmActivity<VM>() {
 
-    lateinit var mDatabind: DB
+    override fun layoutId() = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        userDataBinding(true)
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var mDatabind: DB
 
     /**
      * 创建DataBinding
      */
-    override fun initDataBind() {
-        mDatabind = DataBindingUtil.setContentView(this, layoutId())
-        mDatabind.lifecycleOwner = this
+    override fun initDataBind(): View? {
+        mDatabind = inflateBindingWithGeneric(layoutInflater)
+        return mDatabind.root
     }
 }

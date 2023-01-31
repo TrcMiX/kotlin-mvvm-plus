@@ -58,6 +58,7 @@ dependencies {
     api "androidx.fragment:fragment-ktx:1.2.5"
     // liveData
     api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    api 'com.kunminx.arch:unpeek-livedata:7.2.0-beta1'
     //navigation
     api 'androidx.navigation:navigation-runtime:2.3.0'
     //retrofit

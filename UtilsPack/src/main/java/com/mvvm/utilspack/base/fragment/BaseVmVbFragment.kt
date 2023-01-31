@@ -4,22 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.mvvm.utilspack.base.viewmodel.BaseViewModel
 import com.mvvm.utilspack.ext.inflateBindingWithGeneric
 
 /**
- * 作者　: TrcMiX
- * 描述　: ViewModelFragment基类，自动把ViewModel注入Fragment和Databind注入进来了
- * 需要使用Databind的清继承它
+ * 描述　: ViewModelFragment基类，自动把ViewModel注入Fragment和 ViewBinding 注入进来了
+ * 需要使用 ViewBinding 的清继承它
  */
-abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmFragment<VM>() {
+abstract class BaseVmVbFragment<VM : BaseViewModel, VB : ViewBinding> : BaseVmFragment<VM>() {
 
     override fun layoutId() = 0
 
-    //该类绑定的ViewDataBinding
-    private var _binding: DB? = null
-    val mDatabind: DB get() = _binding!!
+    //该类绑定的 ViewBinding
+    private var _binding: VB? = null
+    val mViewBind: VB get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +26,7 @@ abstract class BaseVmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> : Base
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflateBindingWithGeneric(inflater, container, false)
-        return mDatabind.root
+        return mViewBind.root
     }
 
     override fun onDestroyView() {

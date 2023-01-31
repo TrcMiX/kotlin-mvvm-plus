@@ -34,7 +34,7 @@ class KtxLifeCycleCallBack : Application.ActivityLifecycleCallbacks {
         KtxActivityManger.popActivity(activity)
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
 
     }
 
