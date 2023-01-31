@@ -75,8 +75,7 @@ object SettingUtil {
     }
 
     fun getColorStateList(context: Context): ColorStateList {
-        val colors =
-            intArrayOf(getColor(context), ContextCompat.getColor(context, R.color.colorGray))
+        val colors = intArrayOf(getColor(context), ContextCompat.getColor(context, R.color.colorGray))
         val states = arrayOfNulls<IntArray>(2)
         states[0] = intArrayOf(android.R.attr.state_checked, android.R.attr.state_checked)
         states[1] = intArrayOf()
@@ -136,18 +135,13 @@ object SettingUtil {
         val mySelectorGrad = view.background as StateListDrawable
         try {
             val slDraClass = StateListDrawable::class.java
-            val getStateCountMethod =
-                slDraClass.getDeclaredMethod("getStateCount", *arrayOfNulls(0))
-            val getStateSetMethod =
-                slDraClass.getDeclaredMethod("getStateSet", Int::class.javaPrimitiveType)
-            val getDrawableMethod =
-                slDraClass.getDeclaredMethod("getStateDrawable", Int::class.javaPrimitiveType)
+            val getStateCountMethod = slDraClass.getDeclaredMethod("getStateCount", *arrayOfNulls(0))
+            val getStateSetMethod = slDraClass.getDeclaredMethod("getStateSet", Int::class.javaPrimitiveType)
+            val getDrawableMethod = slDraClass.getDeclaredMethod("getStateDrawable", Int::class.javaPrimitiveType)
             val count = getStateCountMethod.invoke(mySelectorGrad) as Int//对应item标签
             for (i in 0 until count) {
-                val stateSet = getStateSetMethod.invoke(
-                    mySelectorGrad,
-                    i
-                ) as IntArray//对应item标签中的 android:state_xxxx
+                val stateSet =
+                    getStateSetMethod.invoke(mySelectorGrad, i) as IntArray//对应item标签中的 android:state_xxxx
                 if (stateSet.isEmpty()) {
                     val drawable = getDrawableMethod.invoke(
                         mySelectorGrad,

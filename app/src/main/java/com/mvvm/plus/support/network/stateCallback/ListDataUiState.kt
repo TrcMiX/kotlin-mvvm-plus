@@ -1,7 +1,6 @@
 package com.mvvm.plus.support.network.stateCallback
 
 /**
- * 作者　: TrcMiX
  * 描述　: 列表数据状态类
  */
 data class ListDataUiState<T>(

@@ -34,7 +34,6 @@ object DatetimeUtil {
     val nows: Date
         get() = formatDate(DATE_PATTERN, now)
 
-
     /**
      * Date to Strin
      */
